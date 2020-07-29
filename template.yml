@@ -1,0 +1,362 @@
+Resources:
+  contactFormServiceRole2297F55D:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactForm/ServiceRole/Resource
+  contactFormD0175352:
+    Type: AWS::Lambda::Function
+    Properties:
+      Code:
+        S3Bucket:
+          Ref: AssetParametersf5f0e0185526d7dda2290c18a4c0f6ae6bb8f7e583cdc768e2ba01a1d24e5077S3Bucket03234E66
+        S3Key:
+          Fn::Join:
+            - ""
+            - - Fn::Select:
+                  - 0
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParametersf5f0e0185526d7dda2290c18a4c0f6ae6bb8f7e583cdc768e2ba01a1d24e5077S3VersionKeyCA644469
+              - Fn::Select:
+                  - 1
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParametersf5f0e0185526d7dda2290c18a4c0f6ae6bb8f7e583cdc768e2ba01a1d24e5077S3VersionKeyCA644469
+      Handler: contactForm.handler
+      Role:
+        Fn::GetAtt:
+          - contactFormServiceRole2297F55D
+          - Arn
+      Runtime: nodejs12.x
+    DependsOn:
+      - contactFormServiceRole2297F55D
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactForm/Resource
+      aws:asset:path: /Users/mahesh/projects/review/cdk-contact-form/lambda/nodejs
+      aws:asset:property: Code
+  contactFormEndpoint47D511AB:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: contactFormEndpoint
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactFormEndpoint/Resource
+  contactFormEndpointCloudWatchRoleB87626BA:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: apigateway.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactFormEndpoint/CloudWatchRole/Resource
+  contactFormEndpointAccount8CE57297:
+    Type: AWS::ApiGateway::Account
+    Properties:
+      CloudWatchRoleArn:
+        Fn::GetAtt:
+          - contactFormEndpointCloudWatchRoleB87626BA
+          - Arn
+    DependsOn:
+      - contactFormEndpoint47D511AB
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactFormEndpoint/Account
+  contactFormEndpointDeploymentE6228E3C892b5a8ee36cacb281ba8f425b7d7f90:
+    Type: AWS::ApiGateway::Deployment
+    Properties:
+      RestApiId:
+        Ref: contactFormEndpoint47D511AB
+      Description: Automatically created by the RestApi construct
+    DependsOn:
+      - contactFormEndpointcontactformGETC08E407F
+      - contactFormEndpointcontactformPOST943B1DF1
+      - contactFormEndpointcontactformB08F90B6
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactFormEndpoint/Deployment/Resource
+  contactFormEndpointDeploymentStageprodBA549CDC:
+    Type: AWS::ApiGateway::Stage
+    Properties:
+      RestApiId:
+        Ref: contactFormEndpoint47D511AB
+      DeploymentId:
+        Ref: contactFormEndpointDeploymentE6228E3C892b5a8ee36cacb281ba8f425b7d7f90
+      StageName: prod
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactFormEndpoint/DeploymentStage.prod/Resource
+  contactFormEndpointcontactformB08F90B6:
+    Type: AWS::ApiGateway::Resource
+    Properties:
+      ParentId:
+        Fn::GetAtt:
+          - contactFormEndpoint47D511AB
+          - RootResourceId
+      PathPart: contact-form
+      RestApiId:
+        Ref: contactFormEndpoint47D511AB
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactFormEndpoint/Default/contact-form/Resource
+  contactFormEndpointcontactformGETApiPermissionCdkApiGatewayStackcontactFormEndpointD89B356DGETcontactformB97D147A:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - contactFormD0175352
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: contactFormEndpoint47D511AB
+            - /
+            - Ref: contactFormEndpointDeploymentStageprodBA549CDC
+            - /GET/contact-form
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactFormEndpoint/Default/contact-form/GET/ApiPermission.CdkApiGatewayStackcontactFormEndpointD89B356D.GET..contact-form
+  contactFormEndpointcontactformGETApiPermissionTestCdkApiGatewayStackcontactFormEndpointD89B356DGETcontactformC51EF509:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - contactFormD0175352
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: contactFormEndpoint47D511AB
+            - /test-invoke-stage/GET/contact-form
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactFormEndpoint/Default/contact-form/GET/ApiPermission.Test.CdkApiGatewayStackcontactFormEndpointD89B356D.GET..contact-form
+  contactFormEndpointcontactformGETC08E407F:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: GET
+      ResourceId:
+        Ref: contactFormEndpointcontactformB08F90B6
+      RestApiId:
+        Ref: contactFormEndpoint47D511AB
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - ":apigateway:"
+              - Ref: AWS::Region
+              - :lambda:path/2015-03-31/functions/
+              - Fn::GetAtt:
+                  - contactFormD0175352
+                  - Arn
+              - /invocations
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactFormEndpoint/Default/contact-form/GET/Resource
+  contactFormEndpointcontactformPOSTApiPermissionCdkApiGatewayStackcontactFormEndpointD89B356DPOSTcontactform56B1BE53:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - contactFormD0175352
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: contactFormEndpoint47D511AB
+            - /
+            - Ref: contactFormEndpointDeploymentStageprodBA549CDC
+            - /POST/contact-form
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactFormEndpoint/Default/contact-form/POST/ApiPermission.CdkApiGatewayStackcontactFormEndpointD89B356D.POST..contact-form
+  contactFormEndpointcontactformPOSTApiPermissionTestCdkApiGatewayStackcontactFormEndpointD89B356DPOSTcontactform443C6A15:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - contactFormD0175352
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:"
+            - Ref: AWS::Region
+            - ":"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: contactFormEndpoint47D511AB
+            - /test-invoke-stage/POST/contact-form
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactFormEndpoint/Default/contact-form/POST/ApiPermission.Test.CdkApiGatewayStackcontactFormEndpointD89B356D.POST..contact-form
+  contactFormEndpointcontactformPOST943B1DF1:
+    Type: AWS::ApiGateway::Method
+    Properties:
+      HttpMethod: POST
+      ResourceId:
+        Ref: contactFormEndpointcontactformB08F90B6
+      RestApiId:
+        Ref: contactFormEndpoint47D511AB
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        Type: AWS_PROXY
+        Uri:
+          Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - ":apigateway:"
+              - Ref: AWS::Region
+              - :lambda:path/2015-03-31/functions/
+              - Fn::GetAtt:
+                  - contactFormD0175352
+                  - Arn
+              - /invocations
+    Metadata:
+      aws:cdk:path: CdkApiGatewayStack/contactFormEndpoint/Default/contact-form/POST/Resource
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Modules: aws-cdk=1.55.0,@aws-cdk/assets=1.55.0,@aws-cdk/aws-apigateway=1.55.0,@aws-cdk/aws-cloudwatch=1.55.0,@aws-cdk/aws-codeguruprofiler=1.55.0,@aws-cdk/aws-ec2=1.55.0,@aws-cdk/aws-events=1.55.0,@aws-cdk/aws-iam=1.55.0,@aws-cdk/aws-kms=1.55.0,@aws-cdk/aws-lambda=1.55.0,@aws-cdk/aws-logs=1.55.0,@aws-cdk/aws-s3=1.55.0,@aws-cdk/aws-s3-assets=1.55.0,@aws-cdk/aws-sqs=1.55.0,@aws-cdk/aws-ssm=1.55.0,@aws-cdk/cloud-assembly-schema=1.55.0,@aws-cdk/core=1.55.0,@aws-cdk/cx-api=1.55.0,@aws-cdk/region-info=1.55.0,jsii-runtime=node.js/v14.5.0
+    Condition: CDKMetadataAvailable
+Parameters:
+  AssetParametersf5f0e0185526d7dda2290c18a4c0f6ae6bb8f7e583cdc768e2ba01a1d24e5077S3Bucket03234E66:
+    Type: String
+    Description: S3 bucket for asset "f5f0e0185526d7dda2290c18a4c0f6ae6bb8f7e583cdc768e2ba01a1d24e5077"
+  AssetParametersf5f0e0185526d7dda2290c18a4c0f6ae6bb8f7e583cdc768e2ba01a1d24e5077S3VersionKeyCA644469:
+    Type: String
+    Description: S3 key for asset version "f5f0e0185526d7dda2290c18a4c0f6ae6bb8f7e583cdc768e2ba01a1d24e5077"
+  AssetParametersf5f0e0185526d7dda2290c18a4c0f6ae6bb8f7e583cdc768e2ba01a1d24e5077ArtifactHashB0416443:
+    Type: String
+    Description: Artifact hash for asset "f5f0e0185526d7dda2290c18a4c0f6ae6bb8f7e583cdc768e2ba01a1d24e5077"
+Outputs:
+  contactFormEndpointE3D806B3:
+    Value:
+      Fn::Join:
+        - ""
+        - - https://
+          - Ref: contactFormEndpoint47D511AB
+          - .execute-api.
+          - Ref: AWS::Region
+          - "."
+          - Ref: AWS::URLSuffix
+          - /
+          - Ref: contactFormEndpointDeploymentStageprodBA549CDC
+          - /
+Conditions:
+  CDKMetadataAvailable:
+    Fn::Or:
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-northeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ap-southeast-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - ca-central-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - cn-northwest-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-central-1
+      - Fn::Or:
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-north-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - eu-west-3
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - me-south-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - sa-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-east-2
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-1
+          - Fn::Equals:
+              - Ref: AWS::Region
+              - us-west-2
+
