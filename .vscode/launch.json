@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch CDK",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeArgs": [
+                "-r",
+                "./node_modules/ts-node/register/transpile-only"
+            ],
+            "args": [
+                "${workspaceFolder}/bin/cdk-contact-form.ts",
+            ]
+        }
+    ]
+}
