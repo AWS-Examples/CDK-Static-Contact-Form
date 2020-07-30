@@ -3,10 +3,16 @@ import * as cdk from '@aws-cdk/core';
 import * as lambda from '@aws-cdk/aws-lambda';
 import * as apigateway from '@aws-cdk/aws-apigateway';
 
-export class CdkApiGatewayStack extends cdk.Stack {
-    constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
-        super(scope, id, props);
+// extend StackProps so we can add the additional parameters needed
+export interface ApiGatewayProps extends cdk.StackProps {
+    stage: string,
+    client: string,
+    parameterPath: string
+  }          
 
+export class CdkApiGatewayStack extends cdk.Stack {
+    constructor(scope: cdk.Construct, id: string, props: ApiGatewayProps) {
+        super(scope, id, props);
 
         // The code that defines your stack goes here
         // defines the AWS Lambda handler
