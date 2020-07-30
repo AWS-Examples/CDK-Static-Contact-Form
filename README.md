@@ -1,6 +1,6 @@
-# AWS CDK - Static Contact Form POC - Part Two
+# AWS CDK - Static Contact Form POC - Part Three
 
-We have setup this environment, and renamed some files to better reflect what we are going to create.
+Configuring the debugger launch configurations for Visual Studio Code.
 
 # Welcome to your CDK TypeScript project!
 
