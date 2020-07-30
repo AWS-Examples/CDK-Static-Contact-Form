@@ -5,7 +5,7 @@ node_modules
 
 # Added for this POC
 !lambda/*.js
-!bin/*.ts
+bin/*.d.ts
 
 # CDK asset staging directory
 .cdk.staging
