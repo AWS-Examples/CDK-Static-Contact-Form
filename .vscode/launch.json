@@ -1,5 +1,6 @@
 {
     "configurations": [
+        
         {
             "type": "node",
             "request": "launch",
@@ -14,6 +15,17 @@
             "args": [
                 "${workspaceFolder}/bin/cdk-contact-form.ts",
             ]
-        }
+        },
+        {
+            "name": "Attach to SAM CLI",
+            "type": "node",
+            "request": "attach",
+            "address": "localhost",
+            "port": 5858,
+            "localRoot": "${workspaceRoot}/lambda/nodejs/",
+            "remoteRoot": "/var/task",
+            "protocol": "inspector",
+            "stopOnEntry": false
+           }
     ]
 }
