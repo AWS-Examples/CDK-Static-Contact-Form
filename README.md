@@ -1,6 +1,6 @@
-# AWS CDK - Static Contact Form POC - Part Two
+# AWS CDK - Static Contact Form POC - Part Four
 
-We have setup this environment, and renamed some files to better reflect what we are going to create.
+Define additional key-value pairs in cdk.json and use them when creating the stack
 
 # Welcome to your CDK TypeScript project!
 
