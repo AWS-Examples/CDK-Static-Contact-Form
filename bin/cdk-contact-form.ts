@@ -17,7 +17,7 @@ if (stageVal.toLowerCase() == 'developer') {
     parameterPath = '/' + clientVal + '/' + stageVal;
 };
 
-// populate ApiGatewayProps (which )
+// populate ApiGatewayProps
 const apiGatewayProp: ApiGatewayProps = {
     tags: {
         "client": clientVal,
