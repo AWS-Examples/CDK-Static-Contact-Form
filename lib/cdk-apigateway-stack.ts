@@ -55,10 +55,19 @@ export class CdkApiGatewayStack extends cdk.Stack {
         // const form = contactFormApi.root.addResource('contact-form');
         form.addMethod('POST');  // POST /items
 
-        // output the api-gateway url
+        // the api-gateway url is
         const apiUrl = contactFormApi.url + form.path;
-        new cdk.CfnOutput(this, 'apiUrl', {
-            value: apiUrl
+
+        // This apiUrl needs to be referenced by the static website. 
+        // To pass the reference, let's add this value to the SSM parameter store.
+        let apiUrlParameterName = props.parameterPath + '/contactFormApiUrl';
+
+        const apiURLParameter = new ssm.StringParameter(this, 'apiUrlForContactForm', {
+            allowedPattern: '.*',
+            description: 'The contact-form url',
+            parameterName: apiUrlParameterName,
+            stringValue: apiUrl,
+            tier: ssm.ParameterTier.STANDARD,
         });
 
         // define SNS for the contact form

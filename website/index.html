@@ -30,12 +30,15 @@
         }
     </style>
 
+    <!-- External file with the API Gateway URL -->
+    <script type="text/javascript" src="contact-form-api-target.js" > </script>
+
     <!-- Form submit  -->
     <script type="text/javascript">
         function submitToAPI(e) {
             e.preventDefault();
 
-            var api_target_url = 'http://<<api-gateway-urls>>/contact-form'; // Replace this with the API gateway url.
+            var api_target_url = getContactUrl(); // Replace this with the API gateway url.
             var lastname = $("#lastName-input").val();
             var firstname = $("#firstName-input").val();
             var phone = $("#phone-input").val();
