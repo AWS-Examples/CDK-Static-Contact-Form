@@ -40,7 +40,19 @@ export class CdkApiGatewayStack extends cdk.Stack {
             proxy: false
         });
 
-        const form = contactFormApi.root.addResource('contact-form');
+        // api gateway contact-form resource options
+        let cfPreflightOptions: apigateway.CorsOptions = {
+            allowOrigins: apigateway.Cors.ALL_ORIGINS,
+            allowCredentials: false,
+            allowHeaders: apigateway.Cors.DEFAULT_HEADERS,
+            allowMethods: apigateway.Cors.ALL_METHODS
+        }
+
+        const form = contactFormApi.root.addResource('contact-form', {
+            defaultCorsPreflightOptions: cfPreflightOptions
+        });
+
+        // const form = contactFormApi.root.addResource('contact-form');
         form.addMethod('POST');  // POST /items
 
         // output the api-gateway url

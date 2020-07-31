@@ -2,6 +2,7 @@
 import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core';
 import { CdkApiGatewayStack, ApiGatewayProps } from '../lib/cdk-apigateway-stack';
+import { CdkStaticWebsiteStack } from '../lib/cdk-static-website-stack';
 
 const app = new cdk.App();
 
@@ -29,3 +30,11 @@ const apiGatewayProp: ApiGatewayProps = {
 };
 
 new CdkApiGatewayStack(app, 'CdkApiGatewayStack', apiGatewayProp);
+
+// code not shown 
+new CdkStaticWebsiteStack(app, 'CdkStaticWebsiteStack', {
+    tags: {
+        "client": clientVal,
+        "stage": stageVal
+    }
+});

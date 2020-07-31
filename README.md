@@ -1,7 +1,8 @@
-# AWS CDK - Static Contact Form POC - Part Five
+# AWS CDK - Static Contact Form POC - Part Six
 
-Setup the lambda API to publish a message to the SNS Topic.
+Creating the static website, and posting the form content to the API gateway. 
 
+To make this work without errors, we also configure CORS on the API Gateway.
 
 # Welcome to your CDK TypeScript project!
 
