@@ -3,6 +3,7 @@ import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core';
 import { CdkApiGatewayStack, ApiGatewayProps } from '../lib/cdk-apigateway-stack';
 import { CdkStaticWebsiteStack, StaticWebsiteProps } from '../lib/cdk-static-website-stack';
+import { CdkSnsSubscriptionEmailStack, SnsSubscriptionEmailProps } from '../lib/cdk-sns-subscription-email-stack';
 
 const app = new cdk.App();
 
@@ -50,3 +51,18 @@ const staticWebsiteProps: StaticWebsiteProps = {
   };
   
   new CdkStaticWebsiteStack(app, 'CdkStaticWebsiteStack', staticWebsiteProps);
+
+  // Subscription stacks
+// Poplulate subscriptionStackProps
+const emailSubscriptionStackProps: SnsSubscriptionEmailProps = {
+    tags: {
+      "client": clientVal,
+      "stage": stageVal
+    },
+    env: defaultEnvironment,
+    stage: stageVal,
+    client: clientVal,
+    parameterPath: parameterPath.toLowerCase()
+  };
+  
+  new CdkSnsSubscriptionEmailStack(app, 'CdkSnsEmailSubscriptionStack', emailSubscriptionStackProps);

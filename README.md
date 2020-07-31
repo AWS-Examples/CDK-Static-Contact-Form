@@ -1,6 +1,6 @@
-# AWS CDK - Static Contact Form POC - Part Seven
+# AWS CDK - Static Contact Form POC - Part Eight
 
-Automatically adding the API Gateway url to the static website
+Separating the SNS Email Subscription to another stack.
 
 # Welcome to your CDK TypeScript project!
 

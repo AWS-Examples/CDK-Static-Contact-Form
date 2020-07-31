@@ -89,9 +89,6 @@ export class CdkApiGatewayStack extends cdk.Stack {
             tier: ssm.ParameterTier.STANDARD,
         });
 
-        // add subscription to your@email.address
-        snsTopicContactFormMessage.addSubscription(new subs.EmailSubscription('your@email.address'));
-
         // grant read permissions to contactFormHandler
         snsTopicParameter.grantRead(contactFormHandler);  // permissions for the lambda handler to read the parameter
         snsTopicContactFormMessage.grantPublish(contactFormHandler);  // permissions for the lambda handler to publish to this sns topic.
