@@ -1,6 +1,7 @@
-# AWS CDK - Static Contact Form POC - Part Two
+# AWS CDK - Static Contact Form POC - Part Five
 
-We have setup this environment, and renamed some files to better reflect what we are going to create.
+Setup the lambda API to publish a message to the SNS Topic.
+
 
 # Welcome to your CDK TypeScript project!
 

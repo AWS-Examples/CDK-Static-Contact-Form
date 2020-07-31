@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#! /bin/cdk-contact-form.ts
 import 'source-map-support/register';
 import * as cdk from '@aws-cdk/core';
 import { CdkApiGatewayStack, ApiGatewayProps } from '../lib/cdk-apigateway-stack';
